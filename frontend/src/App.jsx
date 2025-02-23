@@ -4,6 +4,7 @@ import { ToastContainer } from "react-toastify";
 import Signin from './pages/auth/Signin';
 import Signup from './pages/auth/Signup';
 import Home from './pages/Home';
+import PrivateRoute from './pages/auth/PrivateRoute';
 
 
 function App() {
@@ -15,7 +16,10 @@ function App() {
           <Route path='/signin' element={<Signin />} />
           <Route path='/signup' element={<Signup />} />
 
-          <Route path='/' element={<Home />} />
+          {/*----------------------------- Private Routes---------------------- */}
+          <Route element={<PrivateRoute />}>
+            <Route path='/' element={<Home />} />
+          </Route>
         </Routes>
       </div>
     </Router>

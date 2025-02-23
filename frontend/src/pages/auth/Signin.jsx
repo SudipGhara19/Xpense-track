@@ -61,7 +61,10 @@ function Signin() {
             dispatch(signinSuccess(response.user));
             toast.success("Signin successful! Redirecting...");
 
-            navigate("/"); //Redirect only when login is successful
+            setTimeout(() => {
+                navigate("/?tab=dashboard");
+            }, 2000)
+
         } catch (error) {
             dispatch(signinFailure(error.message));
             toast.error("An error occurred. Please try again later.");
