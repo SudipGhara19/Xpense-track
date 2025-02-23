@@ -1,16 +1,60 @@
 import React, { useState } from 'react';
 import { FaRegUser } from "react-icons/fa";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { signup } from '../../api/authServices.js';
+import { toast } from 'react-toastify';
+import ClipLoader from 'react-spinners/ClipLoader.js';
+
+
 
 function Signup() {
+
+    const navigate = useNavigate();
+
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [formData, setFormData] = useState({ email: '', password: '', confirmPassword: '' });
+    const [loading, setLoading] = useState(false);
 
+
+    //--------------------------- collecting input field data -----------------------
     const handleChange = (e) => {
         const { id, value } = e.target;
         setFormData(prevState => ({ ...prevState, [id]: value }));
+    };
+
+
+    //------------------------ handle signup -----------------------
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        // Basic validation
+        if (!formData.email || !formData.password || !formData.confirmPassword) {
+            toast.error("All fields are required!");
+            return;
+        }
+
+        if (formData.password !== formData.confirmPassword) {
+            toast.error("Passwords do not match!");
+            return;
+        }
+
+        // Email validation using regex
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailPattern.test(formData.email)) {
+            toast.error("Please enter a valid email address.");
+            return;
+        }
+
+        setLoading(true);
+        const response = await signup({ email: formData.email, password: formData.password });
+        setLoading(false);
+
+        if (response && !response.error) {
+            toast.success("Signup successful! Redirecting...");
+            setTimeout(() => navigate("/signin"), 2000); // Redirect after success
+        }
     };
 
     return (
@@ -23,7 +67,7 @@ function Signup() {
                     <FaRegUser />
                     <h2>Sign Up</h2>
                 </div>
-                <form className='w-[80%] mt-5 flex flex-col gap-4'>
+                <form className='w-[80%] mt-5 flex flex-col gap-4' onSubmit={handleSubmit}>
                     <div className='flex flex-col'>
                         <label className='text-white font-semibold' htmlFor='email'>Email:</label>
                         <input id='email' type='email' placeholder='Email' className='w-full p-2 rounded-lg bg-white bg-opacity-50 outline-none' required onChange={handleChange} />
@@ -54,7 +98,21 @@ function Signup() {
                             </div>
                         </div>
                     </div>
-                    <button type='submit' className='w-full p-2 bg-violet-600 text-white rounded-lg hover:bg-violet-700'>Sign Up</button>
+                    <button disabled={loading}
+                        type='submit'
+                        className='w-full p-2 bg-violet-600 text-white rounded-lg hover:bg-violet-700'>
+                        {loading ? <p className='flex justify-center items-center'>
+                            <ClipLoader
+                                cssOverride={{}}
+                                loading
+                                color='#ffffff'
+                                size={19}
+                                speedMultiplier={1}
+                            />
+                            <span className='ml-2'>Signing up...</span>
+                        </p> :
+                            'sign Up'}
+                    </button>
                 </form>
                 <p className='mt-4 text-gray-800 text-sm'>Already have an account?
                     <Link to='/signin' className='text-violet-800 text-sm font-semibold'> Sign In</Link>

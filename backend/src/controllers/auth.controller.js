@@ -22,18 +22,9 @@ export const signup = async (req, res, next) => {
 
     // Create new user
     const newUser = new User({ email, password: hashedPassword });
-    const savedUser = await newUser.save();
+    await newUser.save();
 
-    const { password: pass, ...rest } = savedUser._doc
-
-    // Generate JWT token
-    const token = jwt.sign(
-      { userId: newUser._id, email: newUser.email },
-      process.env.JWT_SECRET, // Store in .env file
-      { expiresIn: "1d" } // Token valid for 7 days
-    );
-
-    res.status(201).json({ message: "User registered successfully", token, user: rest });
+    res.status(201).json({ message: "User registered successfully"});
   } catch (error) {
     res.status(500).json({ message: "Internal server error", error: error.message });
   }
