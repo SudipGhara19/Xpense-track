@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import errorMiddleware from './src/middlewares/errorMiddleware.js';
 import authRouter from './src/routes/auth.routes.js';
+import transactionRouter from './src/routes/transaction.routes.js';
 
 dotenv.config();
 const app = express();
@@ -58,7 +59,8 @@ mongoose.connect(process.env.DATABASE_URL)
 
 
 //----------------------------------- Routes -----------------------------------------
-app.use('/api/auth', authRouter);
+app.use('/api/auth', authRouter); //auth common route
+app.use('/api/transaction', transactionRouter); // transaction common route
 
 
 //-------------------------------Error Middleware--------------------------------------

@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/user.model.js';
 import ErrorHandler from '../utils/ErrorHandler.js';
+import Transaction from '../models/transaction.model.js';
 
 
 //--------------------------------------------- SIGNUP CONTROLLER -------------------------------------------
@@ -13,7 +14,7 @@ export const signup = async (req, res, next) => {
     // Check if the user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return next(new ErrorHandler(400, 'User already exist, go to sign in.'))
+      return next(new ErrorHandler(400, "User already exists, go to sign in."));
     }
 
     // Hash the password
@@ -22,9 +23,17 @@ export const signup = async (req, res, next) => {
 
     // Create new user
     const newUser = new User({ email, password: hashedPassword });
-    await newUser.save();
+    const savedUser = await newUser.save();
 
-    res.status(201).json({ message: "User registered successfully"});
+    // Create a default Transaction document for the user
+    const newTransaction = new Transaction({ user: savedUser._id });
+    const savedTransaction = await newTransaction.save();
+
+    // Update the user with the transaction ID
+    savedUser.transactionId = savedTransaction._id;
+    await savedUser.save();
+
+    res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
     res.status(500).json({ message: "Internal server error", error: error.message });
   }
