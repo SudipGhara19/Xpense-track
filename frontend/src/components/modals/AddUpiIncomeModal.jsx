@@ -61,6 +61,18 @@ function AddUpiIncomeModal({ showModal, setShowModal }) {
         }
     };
 
+    const categories = [
+        "Salary",
+        "Investments",
+        "Salary",
+        "Business",
+        "Freelance",
+        "Gifts",
+        "Split Bills",
+        "Cashbacks",
+        "Others"
+    ]
+
     if (!showModal) return null;
 
     return (
@@ -100,11 +112,9 @@ function AddUpiIncomeModal({ showModal, setShowModal }) {
                         className="w-full border rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-green-400"
                     >
                         <option value="">Select Category</option>
-                        <option value="Salary">Salary</option>
-                        <option value="Freelance">Freelance</option>
-                        <option value="Investment">Investment</option>
-                        <option value="Gifts">Gifts</option>
-                        <option value="Others">Others</option>
+                        {categories.map((C, i) => 
+                        <option key={i} value={C}>{C}</option>
+                        )}
                     </select>
 
                     <input

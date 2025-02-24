@@ -64,6 +64,21 @@ function AddBankExpenseModal({ showModal, setShowModal }) {
     }
   };
 
+
+  const categories = [
+    "Electric Bill",
+    "Groceries",
+    "Dining",
+    "Entertainment",
+    "Healthcare",
+    "Transport",
+    "Education",
+    "Shopping",
+    "Rent",
+    "Insurance",
+    "Others",
+  ];
+
   if (!showModal) return null;
 
   return (
@@ -103,16 +118,9 @@ function AddBankExpenseModal({ showModal, setShowModal }) {
             className="w-full border rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-blue-400"
           >
             <option value="">Select Category</option>
-            <option value="Food & Dining">Food & Dining</option>
-            <option value="Shopping">Shopping</option>
-            <option value="Transport">Transport</option>
-            <option value="Entertainment">Entertainment</option>
-            <option value="Health & Fitness">Health & Fitness</option>
-            <option value="Education">Education</option>
-            <option value="Travel">Travel</option>
-            <option value="Bills & Utilities">Bills & Utilities</option>
-            <option value="Investment">Investment</option>
-            <option value="Others">Others</option>
+            {categories.map((C, i) =>
+              <option key={i} value={C}>{C}</option>
+            )}
           </select>
 
           <input

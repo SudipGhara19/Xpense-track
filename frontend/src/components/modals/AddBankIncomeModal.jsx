@@ -63,6 +63,19 @@ function AddBankIncomeModal({ showModal, setShowModal }) {
         }
     };
 
+
+    const categories = [
+        "Salary",
+        "Investments",
+        "Salary",
+        "Business",
+        "Freelance",
+        "Gifts",
+        "Split Bills",
+        "Cashbacks",
+        "Others"
+    ]
+
     if (!showModal) return null;
 
     return (
@@ -102,11 +115,9 @@ function AddBankIncomeModal({ showModal, setShowModal }) {
                         className="w-full border rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-blue-400"
                     >
                         <option value="">Select Category</option>
-                        <option value="Salary">Salary</option>
-                        <option value="Business">Business</option>
-                        <option value="Investments">Investments</option>
-                        <option value="Freelance">Freelance</option>
-                        <option value="Others">Others</option>
+                        {categories.map((C, i) =>
+                            <option key={i} value={C}>{C}</option>
+                        )}
                     </select>
 
                     <input
