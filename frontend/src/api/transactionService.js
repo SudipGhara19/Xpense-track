@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import API from "./api";
 
 //---------------------------------- Get Transaction Data -------------------------------
@@ -77,3 +78,45 @@ export const updateBudget = async (data) => {
         return { error: errorMsg };
     }
 };
+
+
+
+//--------------------------------- add new transaction -------------------------------
+export const addTransaction = async (userId, reqBody) => {
+    try {
+        const response = await API.post(`/transaction/add/${userId}`, { ...reqBody });
+
+        // If update is successful, return response data
+        if (response.status === 201) {
+            return response.data;
+        }
+
+        // This block should not execute under normal conditions
+        toast.error("Unexpected response from server.");
+        return { error: "Unexpected response. Please try again." };
+
+    } catch (error) {
+        console.log("New Transaction adding Error:", error); // Log full error object
+
+        const statusCode = error.response?.status;
+        const errorMsg = error.response?.data?.message || "Failed to add new transaction. Please try again.";
+
+        if (statusCode === 400) {
+            toast.error("Invalid transaction details.");
+            return { error: "Invalid transaction details." };
+        }
+
+        if (statusCode === 404) {
+            toast.error("Transaction document not found.");
+            return { error: "Transaction document not found." };
+        }
+
+        if (statusCode === 401) {
+            toast.error("unauthorized, go back.");
+            return { error: "unauthorized, go back." };
+        }
+
+        toast.error(errorMsg); // Show error message
+        return { error: errorMsg };
+    }
+}
