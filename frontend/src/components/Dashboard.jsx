@@ -53,7 +53,7 @@ function Dashboard() {
         labels: ["Income", "Expenses"],
         datasets: [
             {
-                label: "Amount ($)",
+                label: "Amount (₹)",
                 data: [totalIncome, totalExpenses],
                 backgroundColor: ["#36A2EB", "#FF6384"],
                 borderColor: ["#2E86C1", "#E74C3C"],
@@ -125,7 +125,7 @@ function Dashboard() {
 
                     {/* Charts */}
                     <div className="w-full mt-10 flex flex-col md:flex-row justify-center items-center gap-5">
-                        <div className="w-full md:w-1/3 p-5 bg-white shadow-md rounded-lg">
+                        <div className="w-full h-full md:w-1/3 p-5 bg-white shadow-md rounded-lg">
                             <h2 className="text-xl font-bold mb-4">Income vs Expenses</h2>
                             <Bar data={barData} />
                         </div>

@@ -64,7 +64,6 @@ function AddCardIncomeModal({ showModal, setShowModal }) {
     };
 
     const categories = [
-        "Salary",
         "Investments",
         "Salary",
         "Business",

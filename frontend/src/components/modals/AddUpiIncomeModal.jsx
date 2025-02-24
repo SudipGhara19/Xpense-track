@@ -62,7 +62,6 @@ function AddUpiIncomeModal({ showModal, setShowModal }) {
     };
 
     const categories = [
-        "Salary",
         "Investments",
         "Salary",
         "Business",

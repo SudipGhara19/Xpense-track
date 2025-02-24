@@ -65,7 +65,6 @@ function AddBankIncomeModal({ showModal, setShowModal }) {
 
 
     const categories = [
-        "Salary",
         "Investments",
         "Salary",
         "Business",
