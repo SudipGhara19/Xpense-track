@@ -9,6 +9,7 @@ import AddBankIncomeModal from "./modals/AddBankIncomeModal";
 import TransactionDetailsModal from "./modals/TransactionDetailsModal";
 import DeleteTransactionModal from "./modals/DeleteTransactionModal";
 import { motion } from "framer-motion";
+import Counter from "../utils/Counter";
 
 
 // Register Chart.js components
@@ -193,11 +194,11 @@ function Income() {
                         className="w-full sm:w-1/2 h-80 p-4 bg-white shadow-md rounded-lg flex flex-col justify-center items-center">
                         <h2 className="text-lg font-semibold text-gray-700 mb-3">Total Income</h2>
                         <div className="text-center">
-                            <p className="text-3xl font-bold text-purple-600">₹{totalIncome}</p>
+                            <p className="text-3xl font-bold text-purple-600">₹ <Counter value={totalIncome} duration={4} /></p>
                         </div>
                         <div className="text-center mt-6">
                             <p className="text-lg text-gray-600 mt-2">Total Expense Transactions</p>
-                            <p className="text-3xl font-bold text-blue-600">{totalIncomeTxn}</p>
+                            <p className="text-3xl font-bold text-blue-600"><Counter value={totalIncomeTxn} duration={3} /></p>
 
                         </div>
                     </motion.div>

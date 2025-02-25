@@ -12,6 +12,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { Bar, Pie, Doughnut } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement } from "chart.js";
 import { motion } from 'framer-motion'
+import Counter from "../utils/Counter.jsx";
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
@@ -130,7 +131,7 @@ function Dashboard() {
                                 <MdAttachMoney className="text-3xl text-yellow-700" />
                                 <h2 className="text-lg text-white font-semibold">Budget</h2>
                             </div>
-                            <span className="text-3xl font-bold text-white">${transactionData?.budget}</span>
+                            <span className="text-3xl font-bold text-white"><Counter value={transactionData?.budget} duration={5} /></span>
                             <button onClick={() => setIsSetBudget(true)} className="absolute bottom-3 right-3 p-2 rounded-full bg-yellow-500 text-white hover:scale-110 transition-transform">
                                 <MdEdit className="text-2xl" />
                             </button>
@@ -146,7 +147,7 @@ function Dashboard() {
                                 <FaExchangeAlt className="text-3xl text-sky-800" />
                                 <h2 className="text-lg text-white font-semibold">Total Transactions</h2>
                             </div>
-                            <span className="text-3xl font-bold text-white">{transactionData?.transactions?.length}</span>
+                            <span className="text-3xl font-bold text-white"><Counter value={transactionData?.transactions?.length} duration={3} /></span>
                             <a href="/?tab=transactions" className="absolute bottom-3 right-3 p-2 rounded-full bg-sky-500 text-white hover:scale-110 transition-transform">
                                 <MdArrowForward className="text-2xl" />
                             </a>
@@ -162,7 +163,7 @@ function Dashboard() {
                                 <BiWallet className="text-3xl text-green-800" />
                                 <h2 className="text-lg text-white font-semibold">Remaining Amount</h2>
                             </div>
-                            <span className="text-3xl font-bold text-white">${remainingAmount}</span>
+                            <span className="text-3xl font-bold text-white"><Counter value={remainingAmount} duration={4} /></span>
                         </motion.div>
                     </div>
 

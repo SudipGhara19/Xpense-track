@@ -10,6 +10,7 @@ import AddBankExpenseModal from "./modals/AddBankExpenseModal";
 import TransactionDetailsModal from "./modals/TransactionDetailsModal";
 import DeleteTransactionModal from "./modals/DeleteTransactionModal";
 import { motion } from "framer-motion";
+import Counter from "../utils/Counter";
 
 // Register Chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend);
@@ -201,11 +202,11 @@ function Expenses() {
                         className="w-full sm:w-1/2 h-80 p-4 bg-white shadow-md rounded-lg flex flex-col justify-center items-center">
                         <h2 className="text-lg font-semibold text-gray-700 mb-3">Total Expenses</h2>
                         <div className="text-center">
-                            <p className="text-3xl font-bold text-purple-600">₹{totalExpenses}</p>
+                            <p className="text-3xl font-bold text-purple-600">₹ <Counter value={totalExpenses} duration={4} /></p>
                         </div>
                         <div className="text-center mt-6">
                             <p className="text-lg text-gray-600 mt-2">Total Expense Transactions</p>
-                            <p className="text-3xl font-bold text-blue-600">{totalExpenseTxn}</p>
+                            <p className="text-3xl font-bold text-blue-600"><Counter value={totalExpenseTxn} duration={3} /></p>
 
                         </div>
                     </motion.div>
