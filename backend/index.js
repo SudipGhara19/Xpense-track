@@ -10,7 +10,7 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT
 
-const allowedOrigins = "http://localhost:5173"
+const allowedOrigins = "https://xpense-track-eosin.vercel.app"
 
 const corsOptions = {
     origin: function (origin, callback) {
