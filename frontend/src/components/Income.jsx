@@ -185,8 +185,8 @@ function Income() {
                             </div>
                             <div className="text-green-600 font-bold text-lg">₹{txn.amount}</div>
                             <div className="flex justify-center items-center gap-2">
-                                <button onClick={() => handleDelete(txn)} className="bg-red-500 text-white px-4 py-1 rounded-lg hover:bg-red-600 transition">Delete</button>
-                                <button onClick={() => handleViewTransaction(txn)} className="bg-blue-500 text-white px-4 py-1 rounded-lg hover:bg-blue-600 transition">View Details</button>
+                                <button onClick={() => handleDelete(txn)} className="bg-red-500 text-xs md:text-sm text-white px-2 py-1 rounded-lg hover:bg-red-600 transition">Delete</button>
+                                <button onClick={() => handleViewTransaction(txn)} className="bg-blue-500 text-xs md:text-sm text-white px-2 py-1 rounded-lg hover:bg-blue-600 transition">View Details</button>
                             </div>
                         </div>
                     ))}
