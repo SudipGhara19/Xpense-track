@@ -152,3 +152,53 @@ export const addTransaction = async (req, res, next) => {
         next(new ErrorHandler(500, error.message || "Internal Server Error"));
     }
 };
+
+// --------------------------------------- DELETE TRANSACTION EXPENSE/INCOME ------------------------------
+export const deleteTransaction = async (req, res, next) => {
+    try {
+        const { userId, transactionId } = req.params;
+
+        // Check if user is authenticated
+        if (!req.user) {
+            return next(new ErrorHandler(401, "Unauthorized, You are not allowed to perform this task."));
+        }
+
+        // Validate userId and transactionId
+        if (!mongoose.Types.ObjectId.isValid(userId)) {
+            return next(new ErrorHandler(400, "Invalid User ID format."));
+        }
+
+        if (!mongoose.Types.ObjectId.isValid(transactionId)) {
+            return next(new ErrorHandler(400, "Invalid Transaction ID format."));
+        }
+
+        // Find the transaction document
+        const transactionDoc = await Transaction.findOne({ user: userId });
+
+        if (!transactionDoc) {
+            return next(new ErrorHandler(404, "Transaction document not found"));
+        }
+
+        // Filter out the transaction to be deleted
+        const updatedTransactions = transactionDoc.transactions.filter(
+            (transaction) => transaction.transactionId !== transactionId
+        );
+
+        // If no transaction was removed, return an error
+        if (updatedTransactions.length === transactionDoc.transactions.length) {
+            return next(new ErrorHandler(404, "Transaction not found"));
+        }
+
+        // Update the transactions array
+        transactionDoc.transactions = updatedTransactions;
+
+        // Save the updated document
+        await transactionDoc.save();
+
+        // Return the updated transaction document
+        res.status(200).json({ message: "Transaction deleted successfully", budget: transactionDoc });
+    } catch (error) {
+        console.error("Server Error:", error);
+        next(new ErrorHandler(500, error.message || "Internal Server Error"));
+    }
+};

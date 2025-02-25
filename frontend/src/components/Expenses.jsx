@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FaUniversity, FaMobileAlt, FaCreditCard } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { Bar, Pie } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend } from "chart.js";
@@ -7,6 +8,7 @@ import AddUpiExpenseModal from "./modals/AddUpiExpenseModal";
 import AddCardExpenseModal from "./modals/AddCardExpenseModal";
 import AddBankExpenseModal from "./modals/AddBankExpenseModal";
 import TransactionDetailsModal from "./modals/TransactionDetailsModal";
+import DeleteTransactionModal from "./modals/DeleteTransactionModal";
 
 // Register Chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend);
@@ -19,6 +21,8 @@ function Expenses() {
     const [isCard, setIsCard] = useState(false);
     const [isBank, setIsBank] = useState(false);
     const [isViewDetails, setIsViewDetails] = useState(false)
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [txnToDelete, setTxnToDelete] = useState(null);
     const [txnData, setTxnData] = useState(null);
     const [visibleExpenses, setVisibleExpenses] = useState(5);
 
@@ -103,10 +107,16 @@ function Expenses() {
     const showMoreExpenses = () => {
         setVisibleExpenses((prev) => prev + 5);
     };
-
+    //handle view transaction
     const handleViewTransaction = (data) => {
         setTxnData(data);
         setIsViewDetails(true);
+    }
+
+    //handle delete
+    const handleDelete = (data) => {
+        setTxnToDelete(data);
+        setIsDeleting(true);
     }
 
     return (
@@ -184,7 +194,10 @@ function Expenses() {
                                 <p className="text-sm text-gray-500">{new Date(txn.date).toLocaleDateString()} - {txn.tranInfo.method}</p>
                             </div>
                             <div className="text-red-600 font-bold text-lg">₹{txn.amount}</div>
-                            <button onClick={() => handleViewTransaction(txn)} className="bg-blue-500 text-white px-4 py-1 rounded-lg hover:bg-blue-600 transition">View Details</button>
+                            <div className="flex justify-center items-center gap-2">
+                                <button onClick={() => handleDelete(txn)} className="bg-red-500 text-white px-4 py-1 rounded-lg hover:bg-red-600 transition">Delete</button>
+                                <button onClick={() => handleViewTransaction(txn)} className="bg-blue-500 text-white px-4 py-1 rounded-lg hover:bg-blue-600 transition">View Details</button>
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -197,6 +210,8 @@ function Expenses() {
                 )}
 
             </div>
+
+            {isDeleting && <DeleteTransactionModal showModal={isDeleting} setShowModal={setIsDeleting} txn={txnToDelete} />}
 
             {isUpi && <AddUpiExpenseModal showModal={isUpi} setShowModal={setIsUpi} />}
             {isCard && <AddCardExpenseModal showModal={isCard} setShowModal={setIsCard} />}

@@ -120,3 +120,44 @@ export const addTransaction = async (userId, reqBody) => {
         return { error: errorMsg };
     }
 }
+
+
+//---------------------------------Delete Transaction -----------------------------
+export const deleteTransaction = async (userId, transactionId) => {
+    try {
+        const response = await API.delete(`/transaction/delete/${userId}/${transactionId}`);
+
+        // If update is successful, return response data
+        if (response.status === 200) {
+            return response.data;
+        }
+
+        // This block should not execute under normal conditions
+        toast.error("Unexpected response from server.");
+        return { error: "Unexpected response. Please try again." };
+
+    } catch (error) {
+        console.log("Error in deleting transaction:", error); // Log full error object
+
+        const statusCode = error.response?.status;
+        const errorMsg = error.response?.data?.message || "Failed to delete transaction. Please try again.";
+
+        if (statusCode === 400) {
+            toast.error("Invalid User Id details.");
+            return { error: "Invalid User Id details." };
+        }
+
+        if (statusCode === 404) {
+            toast.error("Transaction document not found");
+            return { error: "Transaction document not found" };
+        }
+
+        if (statusCode === 401) {
+            toast.error("unauthorized, go back.");
+            return { error: "unauthorized, go back." };
+        }
+
+        toast.error(errorMsg); // Show error message
+        return { error: errorMsg };
+    }
+}

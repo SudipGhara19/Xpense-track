@@ -7,6 +7,7 @@ import AddUpiIncomeModal from "./modals/AddUpiIncomeModal";
 import AddCardIncomeModal from "./modals/AddCardIncomeModal";
 import AddBankIncomeModal from "./modals/AddBankIncomeModal";
 import TransactionDetailsModal from "./modals/TransactionDetailsModal";
+import DeleteTransactionModal from "./modals/DeleteTransactionModal";
 
 
 // Register Chart.js components
@@ -20,6 +21,8 @@ function Income() {
     const [isCard, setIsCard] = useState(false);
     const [isBank, setIsBank] = useState(false);
     const [isViewDetails, setIsViewDetails] = useState(false)
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [txnToDelete, setTxnToDelete] = useState(null);
     const [txnData, setTxnData] = useState(null);
     const [visibleIncomes, setVisibleIncomes] = useState(5);
 
@@ -109,6 +112,12 @@ function Income() {
         setIsViewDetails(true);
     }
 
+    //handle delete
+    const handleDelete = (data) => {
+        setTxnToDelete(data);
+        setIsDeleting(true);
+    }
+
     return (
         <>
             <div className="w-full h-auto">
@@ -175,7 +184,10 @@ function Income() {
                                 <p className="text-sm text-gray-500">{new Date(txn.date).toLocaleDateString()} - {txn.tranInfo.method}</p>
                             </div>
                             <div className="text-green-600 font-bold text-lg">₹{txn.amount}</div>
-                            <button onClick={() => handleViewTransaction(txn)} className="bg-blue-500 text-white px-4 py-1 rounded-lg hover:bg-blue-600 transition">View Details</button>
+                            <div className="flex justify-center items-center gap-2">
+                                <button onClick={() => handleDelete(txn)} className="bg-red-500 text-white px-4 py-1 rounded-lg hover:bg-red-600 transition">Delete</button>
+                                <button onClick={() => handleViewTransaction(txn)} className="bg-blue-500 text-white px-4 py-1 rounded-lg hover:bg-blue-600 transition">View Details</button>
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -188,6 +200,8 @@ function Income() {
                 )}
 
             </div>
+
+            {isDeleting && <DeleteTransactionModal showModal={isDeleting} setShowModal={setIsDeleting} txn={txnToDelete} />}
 
             {isUpi && <AddUpiIncomeModal showModal={isUpi} setShowModal={setIsUpi} />}
             {isCard && <AddCardIncomeModal showModal={isCard} setShowModal={setIsCard} />}
