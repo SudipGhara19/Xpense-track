@@ -41,52 +41,52 @@ function Sidebar() {
                     </div>
                     <ul className="space-y-2 mt-8">
                         <li>
-                            <NavLink
-                                to={`/?tab=dashboard`}
-                                className={({ isActive }) =>
+                            <a
+                                href={`/?tab=dashboard`}
+                                className={
                                     `flex items-center gap-2 px-3 py-2 rounded-md ${activeTab === "dashboard" ? "bg-gray-700 text-yellow-400 font-bold" : "hover:bg-gray-700"
                                     }`
                                 }
                             >
                                 <LuLayoutDashboard />
                                 <span>Dashboard</span>
-                            </NavLink>
+                            </a>
                         </li>
                         <li>
-                            <NavLink
-                                to={`/?tab=transactions`}
-                                className={({ isActive }) =>
+                            <a
+                                href={`/?tab=transactions`}
+                                className={
                                     `flex items-center gap-2 px-3 py-2 rounded-md ${activeTab === "transactions" ? "bg-gray-700 text-yellow-400 font-bold" : "hover:bg-gray-700"
                                     }`
                                 }
                             >
                                 <GrTransaction />
                                 <span>Transactions</span>
-                            </NavLink>
+                            </a>
                         </li>
                         <li>
-                            <NavLink
-                                to={`/?tab=expenses`}
-                                className={({ isActive }) =>
+                            <a
+                                href={`/?tab=expenses`}
+                                className={
                                     `flex items-center gap-2 px-3 py-2 rounded-md ${activeTab === "expenses" ? "bg-gray-700 text-yellow-400 font-bold" : "hover:bg-gray-700"
                                     }`
                                 }
                             >
                                 <GiWallet />
                                 <span>Expenses</span>
-                            </NavLink>
+                            </a>
                         </li>
                         <li>
-                            <NavLink
-                                to={`/?tab=incomes`}
-                                className={({ isActive }) =>
+                            <a
+                                href={`/?tab=incomes`}
+                                className={
                                     `flex items-center gap-2 px-3 py-2 rounded-md ${activeTab === "incomes" ? "bg-gray-700 text-yellow-400 font-bold" : "hover:bg-gray-700"
                                     }`
                                 }
                             >
                                 <FaCircleDollarToSlot />
                                 <span>Incomes</span>
-                            </NavLink>
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -140,52 +140,52 @@ function Sidebar() {
                 {/* Navigation Links */}
                 <ul className="space-y-2 mt-8">
                     <li>
-                        <NavLink
-                            to={`/?tab=dashboard`}
-                            className={({ isActive }) =>
+                        <a
+                            href={`/?tab=dashboard`}
+                            className={
                                 `flex items-center gap-2 px-3 py-2 rounded-md ${activeTab === "dashboard" ? "bg-gray-700 text-yellow-400 font-bold" : "hover:bg-gray-700"
                                 }`
                             }
                         >
                             <LuLayoutDashboard />
                             <span>Dashboard</span>
-                        </NavLink>
+                        </a>
                     </li>
                     <li>
-                        <NavLink
-                            to={`/?tab=transactions`}
-                            className={({ isActive }) =>
+                        <a
+                            href={`/?tab=transactions`}
+                            className={
                                 `flex items-center gap-2 px-3 py-2 rounded-md ${activeTab === "transactions" ? "bg-gray-700 text-yellow-400 font-bold" : "hover:bg-gray-700"
                                 }`
                             }
                         >
                             <GrTransaction />
                             <span>Transactions</span>
-                        </NavLink>
+                        </a>
                     </li>
                     <li>
-                        <NavLink
-                            to={`/?tab=expenses`}
-                            className={({ isActive }) =>
+                        <a
+                            href={`/?tab=expenses`}
+                            className={
                                 `flex items-center gap-2 px-3 py-2 rounded-md ${activeTab === "expenses" ? "bg-gray-700 text-yellow-400 font-bold" : "hover:bg-gray-700"
                                 }`
                             }
                         >
                             <GiWallet />
                             <span>Expenses</span>
-                        </NavLink>
+                        </a>
                     </li>
                     <li>
-                        <NavLink
-                            to={`/?tab=incomes`}
-                            className={({ isActive }) =>
+                        <a
+                            href={`/?tab=incomes`}
+                            className={
                                 `flex items-center gap-2 px-3 py-2 rounded-md ${activeTab === "incomes" ? "bg-gray-700 text-yellow-400 font-bold" : "hover:bg-gray-700"
                                 }`
                             }
                         >
                             <FaCircleDollarToSlot />
                             <span>Incomes</span>
-                        </NavLink>
+                        </a>
                     </li>
                 </ul>
 

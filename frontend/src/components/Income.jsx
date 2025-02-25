@@ -8,6 +8,7 @@ import AddCardIncomeModal from "./modals/AddCardIncomeModal";
 import AddBankIncomeModal from "./modals/AddBankIncomeModal";
 import TransactionDetailsModal from "./modals/TransactionDetailsModal";
 import DeleteTransactionModal from "./modals/DeleteTransactionModal";
+import { motion } from "framer-motion";
 
 
 // Register Chart.js components
@@ -118,6 +119,27 @@ function Income() {
         setIsDeleting(true);
     }
 
+    //pop upwards animation value
+    const popUpVariant = {
+        hidden: { opacity: 0, y: 50 },
+        visible: { opacity: 1, y: 0, transition: { duration: 1, ease: "easeOut" } }
+    };
+    //pop upwards animation value
+    const popDownVariant = {
+        hidden: { opacity: 0, y: -50 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+    };
+    //left to right animation value
+    const leftToRightVariant = {
+        hidden: { opacity: 0, x: -50 },
+        visible: { opacity: 1, x: 0, transition: { duration: 1, ease: "easeOut" } }
+    };
+    //right to left animation value
+    const rightToLeftVariant = {
+        hidden: { opacity: 0, x: 50 },
+        visible: { opacity: 1, x: 0, transition: { duration: 1, ease: "easeOut" } }
+    };
+
     return (
         <>
             <div className="w-full h-auto">
@@ -126,29 +148,49 @@ function Income() {
                 {/* ------ Adding options ------- */}
                 <div className="w-full h-auto flex flex-col justify-center items-center sm:flex-row sm:justify-center sm:items-center gap-4 mt-3">
                     {/* via UPI */}
-                    <div onClick={() => setIsUpi(true)} className="w-full sm:w-1/3 h-24 bg-green-600 rounded-lg p-4 flex justify-between items-center text-white relative 
+                    <motion.div
+                        variants={leftToRightVariant}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.2 }}
+                        onClick={() => setIsUpi(true)} className="w-full sm:w-1/3 h-24 bg-green-600 rounded-lg p-4 flex justify-between items-center text-white relative 
                     hover:scale-105 transition-transform duration-300 cursor-pointer">
                         <FaMobileAlt size={40} />
                         <h2 className="text-lg font-semibold">UPI Payment</h2>
-                    </div>
+                    </motion.div>
                     {/* via Bank */}
-                    <div onClick={() => setIsBank(true)} className="w-full sm:w-1/3 h-24 bg-green-600 rounded-lg p-4 flex justify-between items-center text-white relative 
+                    <motion.div
+                        variants={popDownVariant}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.2 }}
+                        onClick={() => setIsBank(true)} className="w-full sm:w-1/3 h-24 bg-green-600 rounded-lg p-4 flex justify-between items-center text-white relative 
                     hover:scale-105 transition-transform duration-300 cursor-pointer">
                         <FaUniversity size={40} />
                         <h2 className="text-lg font-semibold">Bank Transfer</h2>
-                    </div>
+                    </motion.div>
                     {/* via Card */}
-                    <div onClick={() => setIsCard(true)} className="w-full sm:w-1/3 h-24 bg-green-600 rounded-lg p-4 flex justify-between items-center text-white relative 
+                    <motion.div
+                        variants={rightToLeftVariant}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.2 }}
+                        onClick={() => setIsCard(true)} className="w-full sm:w-1/3 h-24 bg-green-600 rounded-lg p-4 flex justify-between items-center text-white relative 
                     hover:scale-105 transition-transform duration-300 cursor-pointer">
                         <FaCreditCard size={40} />
                         <h2 className="text-lg font-semibold">Card Payment</h2>
-                    </div>
+                    </motion.div>
                 </div>
 
                 {/* ------ Expense Summary (Pie Chart + Summary Card) ------- */}
                 <div className="w-full flex flex-wrap sm:flex-nowrap justify-center gap-5 mt-6">
                     {/* Expense Summary Card */}
-                    <div className="w-full sm:w-1/2 h-80 p-4 bg-white shadow-md rounded-lg flex flex-col justify-center items-center">
+                    <motion.div
+                        variants={leftToRightVariant}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.2 }}
+                        className="w-full sm:w-1/2 h-80 p-4 bg-white shadow-md rounded-lg flex flex-col justify-center items-center">
                         <h2 className="text-lg font-semibold text-gray-700 mb-3">Total Income</h2>
                         <div className="text-center">
                             <p className="text-3xl font-bold text-purple-600">₹{totalIncome}</p>
@@ -158,25 +200,41 @@ function Income() {
                             <p className="text-3xl font-bold text-blue-600">{totalIncomeTxn}</p>
 
                         </div>
-                    </div>
+                    </motion.div>
+
                     {/* Pie Chart Card */}
-                    <div className="w-full sm:w-1/2 h-80 p-4 bg-white shadow-md rounded-lg flex flex-col justify-center items-center">
+                    <motion.div
+                        variants={rightToLeftVariant}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.2 }}
+                        className="w-full sm:w-1/2 h-80 p-4 bg-white shadow-md rounded-lg flex flex-col justify-center items-center">
                         <h2 className="text-lg font-semibold text-gray-700 mb-3">Income Summary</h2>
                         <div className="w-full h-full flex justify-center items-center">
                             <Pie data={pieChartData} options={{ responsive: true, maintainAspectRatio: false }} />
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
 
                 {/* ------ Category-wise Expense Chart ------- */}
-                <div className="w-full h-64 p-4 bg-white shadow-md rounded-lg my-4">
+                <motion.div
+                    variants={popUpVariant}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.3 }}
+                    className="w-full h-64 p-4 bg-white shadow-md rounded-lg my-4">
                     <h2 className="text-lg font-semibold text-gray-700 mb-3">Income Breakdown by Category</h2>
                     <Bar data={categoryChartData} options={chartOptions} />
-                </div>
+                </motion.div>
 
                 {/* Expense List */}
-                <h2 className="text-2xl text-center font-bold text-gray-700 mt-16 mb-4">All Incomes</h2>
-                <div className="space-y-3">
+                <motion.div
+                    variants={popUpVariant}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.2 }}
+                    className="space-y-3">
+                    <h2 className="text-2xl text-center font-bold text-gray-700 mt-16 mb-4">All Incomes</h2>
                     {incomes.slice(0, visibleIncomes).map((txn, index) => (
                         <div key={index} className="p-4 bg-white shadow-md rounded-lg flex justify-between items-center border-l-4 border-blue-500">
                             <div>
@@ -190,7 +248,9 @@ function Income() {
                             </div>
                         </div>
                     ))}
-                </div>
+                </motion.div>
+
+
                 {visibleIncomes < incomes.length && (
                     <div className="text-center mt-4">
                         <button onClick={showMoreIncomes} className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">
