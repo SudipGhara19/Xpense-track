@@ -6,6 +6,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, T
 import AddUpiIncomeModal from "./modals/AddUpiIncomeModal";
 import AddCardIncomeModal from "./modals/AddCardIncomeModal";
 import AddBankIncomeModal from "./modals/AddBankIncomeModal";
+import TransactionDetailsModal from "./modals/TransactionDetailsModal";
 
 
 // Register Chart.js components
@@ -18,6 +19,8 @@ function Income() {
     const [isUpi, setIsUpi] = useState(false);
     const [isCard, setIsCard] = useState(false);
     const [isBank, setIsBank] = useState(false);
+    const [isViewDetails, setIsViewDetails] = useState(false)
+    const [txnData, setTxnData] = useState(null);
     const [visibleIncomes, setVisibleIncomes] = useState(5);
 
 
@@ -101,6 +104,11 @@ function Income() {
         setVisibleIncomes((prev) => prev + 5);
     };
 
+    const handleViewTransaction = (data) => {
+        setTxnData(data);
+        setIsViewDetails(true);
+    }
+
     return (
         <>
             <div className="w-full h-auto">
@@ -167,7 +175,7 @@ function Income() {
                                 <p className="text-sm text-gray-500">{new Date(txn.date).toLocaleDateString()} - {txn.tranInfo.method}</p>
                             </div>
                             <div className="text-green-600 font-bold text-lg">₹{txn.amount}</div>
-                            <button className="bg-blue-500 text-white px-4 py-1 rounded-lg hover:bg-blue-600 transition">View Details</button>
+                            <button onClick={() => handleViewTransaction(txn)} className="bg-blue-500 text-white px-4 py-1 rounded-lg hover:bg-blue-600 transition">View Details</button>
                         </div>
                     ))}
                 </div>
@@ -184,6 +192,8 @@ function Income() {
             {isUpi && <AddUpiIncomeModal showModal={isUpi} setShowModal={setIsUpi} />}
             {isCard && <AddCardIncomeModal showModal={isCard} setShowModal={setIsCard} />}
             {isBank && <AddBankIncomeModal showModal={isBank} setShowModal={setIsBank} />}
+            {isViewDetails && <TransactionDetailsModal showModal={isViewDetails} setShowModal={setIsViewDetails} tnx={txnData} />}
+
         </>
     );
 }

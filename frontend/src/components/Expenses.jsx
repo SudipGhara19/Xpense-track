@@ -6,6 +6,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ArcElement, T
 import AddUpiExpenseModal from "./modals/AddUpiExpenseModal";
 import AddCardExpenseModal from "./modals/AddCardExpenseModal";
 import AddBankExpenseModal from "./modals/AddBankExpenseModal";
+import TransactionDetailsModal from "./modals/TransactionDetailsModal";
 
 // Register Chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, Title, Tooltip, Legend);
@@ -17,6 +18,8 @@ function Expenses() {
     const [isUpi, setIsUpi] = useState(false);
     const [isCard, setIsCard] = useState(false);
     const [isBank, setIsBank] = useState(false);
+    const [isViewDetails, setIsViewDetails] = useState(false)
+    const [txnData, setTxnData] = useState(null);
     const [visibleExpenses, setVisibleExpenses] = useState(5);
 
     // Transaction Methods Count
@@ -101,6 +104,11 @@ function Expenses() {
         setVisibleExpenses((prev) => prev + 5);
     };
 
+    const handleViewTransaction = (data) => {
+        setTxnData(data);
+        setIsViewDetails(true);
+    }
+
     return (
         <>
             <div className="w-full h-auto">
@@ -176,7 +184,7 @@ function Expenses() {
                                 <p className="text-sm text-gray-500">{new Date(txn.date).toLocaleDateString()} - {txn.tranInfo.method}</p>
                             </div>
                             <div className="text-red-600 font-bold text-lg">₹{txn.amount}</div>
-                            <button className="bg-blue-500 text-white px-4 py-1 rounded-lg hover:bg-blue-600 transition">View Details</button>
+                            <button onClick={() => handleViewTransaction(txn)} className="bg-blue-500 text-white px-4 py-1 rounded-lg hover:bg-blue-600 transition">View Details</button>
                         </div>
                     ))}
                 </div>
@@ -193,6 +201,7 @@ function Expenses() {
             {isUpi && <AddUpiExpenseModal showModal={isUpi} setShowModal={setIsUpi} />}
             {isCard && <AddCardExpenseModal showModal={isCard} setShowModal={setIsCard} />}
             {isBank && <AddBankExpenseModal showModal={isBank} setShowModal={setIsBank} />}
+            {isViewDetails && <TransactionDetailsModal showModal={isViewDetails} setShowModal={setIsViewDetails} tnx={txnData} />}
         </>
     );
 }
